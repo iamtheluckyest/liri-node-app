@@ -69,26 +69,26 @@ function getSong(songQuery){
     var spotify = new Spotify(keys.spotifyKeys);
     spotify.search({ type: 'track', query: songQuery, limit: '1'}, function(err, data) {
         if (err) {
-          return console.log('Error occurred: ' + err);
+            return console.log('Error occurred: ' + err);
         }
-      var songInfo = JSON.parse(JSON.stringify(data.tracks.items[0], null, 2));
-      console.log('Song: ' + songInfo.name);
-      var artists = ''
-      songInfo.artists.forEach(function(value, index){
+        var songInfo = JSON.parse(JSON.stringify(data.tracks.items[0], null, 2));
+        console.log('Song: ' + songInfo.name);
+        var artists = ''
+        songInfo.artists.forEach(function(value, index){
         if (index > 0) {
             artists += ',';
         };
         artists +=  ' ' + songInfo.artists[index].name;
-      })
-      if (songInfo.artists.length > 1){
+        })
+        if (songInfo.artists.length > 1){
         console.log('Artists:' + artists);
-      }
-      else {
+        }
+        else {
         console.log('Artist:' + artists);
-      };
-      console.log('Album: ' + songInfo.album.name);
-      console.log('Preview URL: ' + songInfo.preview_url)
-      });
+        };
+        console.log('Album: ' + songInfo.album.name);
+        console.log('Preview URL: ' + songInfo.preview_url)
+        });
 }
 
 
@@ -97,20 +97,24 @@ function getMovie(movieName){
     request(queryUrl, function(error, response, body){
         if (!error && response.statusCode === 200) {
             var movieInfo = JSON.parse(body)
-            console.log(movieInfo.Title);
-            console.log(movieInfo.Plot)
-            console.log('Actors: ' + movieInfo.Actors);
-            console.log('Released in: ' + movieInfo.Year);
-            console.log('Country: ' + movieInfo.Country);
-            console.log('Language: ' + movieInfo.Language);
-            movieInfo.Ratings.forEach(function(value, index){
-                if (movieInfo.Ratings[index].Source === 'Internet Movie Database') {
-                    console.log('IMDB Rating: ' + movieInfo.Ratings[0].Value);
-                }
-                else if (movieInfo.Ratings[index].Source === 'Rotten Tomatoes'){
-                    console.log('Rotten Tomatoes Rating: ' + movieInfo.Ratings[1].Value);
-                };
-            });
+            if (typeof movieInfo.Title === 'undefined') {
+                console.log('Unable to find this movie.')
+            } else {
+                console.log(movieInfo.Title);
+                console.log(movieInfo.Plot)
+                console.log('Actors: ' + movieInfo.Actors);
+                console.log('Released in: ' + movieInfo.Year);
+                console.log('Country: ' + movieInfo.Country);
+                console.log('Language: ' + movieInfo.Language);
+                movieInfo.Ratings.forEach(function(value, index){
+                    if (movieInfo.Ratings[index].Source === 'Internet Movie Database') {
+                        console.log('IMDB Rating: ' + movieInfo.Ratings[0].Value);
+                    }
+                    else if (movieInfo.Ratings[index].Source === 'Rotten Tomatoes'){
+                        console.log('Rotten Tomatoes Rating: ' + movieInfo.Ratings[1].Value);
+                    };
+                });
+            };
         }
         else {
             console.log("error");
