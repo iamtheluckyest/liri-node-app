@@ -1,8 +1,11 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.13.5
+version: v1.14.1
 ignore: {}
 # patches apply the minimum changes required to fix a vulnerability
 patch:
   SNYK-JS-LODASH-450202:
     - node-spotify-api > request-promise > request-promise-core > lodash:
         patched: '2019-07-05T15:14:04.278Z'
+  SNYK-JS-LODASH-567746:
+    - node-spotify-api > request-promise > request-promise-core > lodash:
+        patched: '2020-04-30T21:12:41.157Z'
